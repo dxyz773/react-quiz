@@ -4,7 +4,10 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
+import NextButton from "./NextButton";
+import Progress from "./Progress";
 import Main from "./Main";
+import FinishScreen from "./FinishScreen";
 
 const initialState = {
   questions: [],
@@ -40,7 +43,7 @@ function reducer(state, action) {
       } else
         return {
           ...state,
-          status: "finished",
+          status: "finish",
         };
 
     default:
@@ -49,11 +52,17 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ questions, status, index, correct }, dispatch] = useReducer(
+  const [{ questions, status, index, correct, points }, dispatch] = useReducer(
     reducer,
     initialState
   );
+
   const numQuestions = questions.length;
+  const totalPossiblePoints = questions.reduce(
+    (acc, current) => acc + current.points,
+    0
+  );
+
   useEffect(function () {
     async function fetchData() {
       try {
@@ -78,10 +87,26 @@ function App() {
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Question
-            question={questions[index]}
-            dispatch={dispatch}
-            correct={correct}
+          <>
+            <Progress
+              numQuestions={numQuestions}
+              index={index}
+              totalPossiblePoints={totalPossiblePoints}
+              points={points}
+              correct={correct}
+            />
+            <Question
+              question={questions[index]}
+              dispatch={dispatch}
+              correct={correct}
+            />
+            <NextButton dispatch={dispatch} correct={correct} />
+          </>
+        )}
+        {status === "finish" && (
+          <FinishScreen
+            points={points}
+            totalPossiblePoints={totalPossiblePoints}
           />
         )}
       </Main>
