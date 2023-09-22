@@ -1,7 +1,4 @@
-import { useQuiz } from "../context/ReactQuizContext";
-
-function NextButton() {
-  const { correct, dispatch } = useQuiz();
+function NextButton({ dispatch, correct }) {
   if (correct === null) return null;
   return (
     <button className="btn btn-ui" onClick={() => dispatch({ type: "next" })}>

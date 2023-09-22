@@ -1,10 +1,7 @@
-import { useQuiz } from "../context/ReactQuizContext";
-
-function Options() {
-  const { questions, dispatch, correct, index } = useQuiz();
+function Options({ question, dispatch, correct }) {
   return (
     <div className="options">
-      {questions.at(index).options.map((option, index) => (
+      {question.options.map((option, index) => (
         <button
           key={option}
           className={

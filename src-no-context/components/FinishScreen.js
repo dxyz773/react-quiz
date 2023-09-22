@@ -1,7 +1,4 @@
-import { useQuiz } from "../context/ReactQuizContext";
-
-function FinishScreen() {
-  const { points, totalPossiblePoints, highscore } = useQuiz();
+function FinishScreen({ points, totalPossiblePoints, highscore }) {
   const percentage = (points / totalPossiblePoints) * 100;
 
   let emoji;
