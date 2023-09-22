@@ -11,6 +11,8 @@
 ## Topic of Exploration:
 
 - useReducer
+- useContext
+- custom hooks
 
 ## Instructions To Start App:
 
